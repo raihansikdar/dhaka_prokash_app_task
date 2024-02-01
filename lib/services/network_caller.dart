@@ -1,0 +1,29 @@
+import 'dart:convert';
+import 'dart:developer';
+
+import 'package:dhaka_prokash_app_task/services/network_response.dart';
+import 'package:http/http.dart';
+
+class NetworkCaller {
+  ///----------------------------------->> get request method <<----------------------------------
+  static Future<NetworkResponse> getRequest(String url,
+      {bool isLogin = false}) async {
+    try {
+      Response response = await get(
+          Uri.parse(url), headers: {'Content-Type': 'application/json'});
+
+      log("getRequest statusCode ==> ${response.statusCode}");
+      log("getRequest body ==> ${response.body}");
+
+      if (response.statusCode == 200) {
+        return NetworkResponse(isSuccess: true, statusCode: response.statusCode, body: jsonDecode(response.body));
+      } else {
+        return NetworkResponse(
+            isSuccess: false, statusCode: response.statusCode, body: null);
+      }
+    } catch (e) {
+      log(e.toString());
+    }
+    return NetworkResponse(isSuccess: false, statusCode: -1, body: null);
+  }
+}
