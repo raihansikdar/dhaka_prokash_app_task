@@ -119,7 +119,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-   convertText(var data){
+   dynamic convertText(var data){
     var unescape = HtmlUnescape();
     var document = parse(utf8.decode(data.codeUnits));
     String parsedString = unescape.convert(document.body?.text ?? '');
